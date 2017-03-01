@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':deferred')
+    compile 'org.assertj:assertj-core:2.6.0'
+}

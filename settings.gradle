@@ -1,0 +1,6 @@
+rootProject.name = 'deferred'
+include 'core'
+findProject(':core')?.name = 'deferred'
+include 'deferred-rxjava2'
+include 'deferred-assert'
+
