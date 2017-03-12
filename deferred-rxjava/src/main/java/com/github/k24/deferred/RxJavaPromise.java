@@ -10,23 +10,51 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * {@link Deferred.Promise} with RxJava.
+ * <p>
  * Created by k24 on 2017/03/01.
  */
+@SuppressWarnings("WeakerAccess")
 public class RxJavaPromise<T> implements Deferred.Promise<T> {
     private final Single<T> single;
 
+    /**
+     * Construct with Single.
+     *
+     * @param single for Promise operation
+     */
     public RxJavaPromise(Single<T> single) {
         this.single = single;
     }
 
+    /**
+     * Create with Single.just.
+     *
+     * @param value for Single.just
+     * @param <T>   Type
+     * @return an instance with Single.just
+     */
     public static <T> RxJavaPromise<T> just(T value) {
         return new RxJavaPromise<>(Single.just(value));
     }
 
+    /**
+     * Create with Single null.
+     *
+     * @param <T> Type
+     * @return an instance with Single.just
+     */
     public static <T> RxJavaPromise<T> empty() {
         return new RxJavaPromise<>(Single.<T>just(null));
     }
 
+    /**
+     * Create with Single.error.
+     *
+     * @param throwable for error
+     * @param <T>       Type
+     * @return an instance with Single.error
+     */
     public static <T> RxJavaPromise<T> error(Throwable throwable) {
         return new RxJavaPromise<>(Single.<T>error(throwable));
     }

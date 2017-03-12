@@ -2,41 +2,57 @@ package com.github.k24.deferred;
 
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.MaybeSubject;
-import io.reactivex.subjects.Subject;
 
 import javax.annotation.Nonnull;
 
 /**
+ * {@link Deferred.DeferredPromise} with RxJava2.
+ * <p>
  * Created by k24 on 2017/02/25.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class RxJava2DeferredPromise<T> implements Deferred.DeferredPromise<T> {
     private final MaybeSubject<T> subject;
     private final Deferred.Promise<T> promise;
 
+    /**
+     * Construct with default values.
+     */
     public RxJava2DeferredPromise() {
         this(MaybeSubject.<T>create(), null);
     }
 
-    public RxJava2DeferredPromise(Subject<T> subject) {
-        this(MaybeSubject.<T>create(), null);
+    /**
+     * Construct with Subject.
+     *
+     * @param subject for {@link RxJava2Promise}
+     */
+    public RxJava2DeferredPromise(MaybeSubject<T> subject) {
+        this(subject, null);
     }
 
+    /**
+     * Construct with Scheduler.
+     *
+     * @param scheduler for {@link RxJava2Promise}
+     */
     public RxJava2DeferredPromise(Scheduler scheduler) {
         this(MaybeSubject.<T>create(), scheduler);
     }
 
-    private RxJava2DeferredPromise(MaybeSubject<T> subject, Scheduler scheduler) {
+    /**
+     * Construct with Subject and Scheduler.
+     *
+     * @param subject   for {@link RxJava2Promise}
+     * @param scheduler for {@link RxJava2Promise}
+     */
+    public RxJava2DeferredPromise(MaybeSubject<T> subject, Scheduler scheduler) {
         this.subject = subject;
         if (scheduler == null) {
-            this.promise = new RxJava2Promise<T>(subject);
+            this.promise = new RxJava2Promise<>(subject);
         } else {
-            this.promise = new RxJava2Promise<T>(subject.subscribeOn(scheduler));
+            this.promise = new RxJava2Promise<>(subject.subscribeOn(scheduler));
         }
-    }
-
-    private RxJava2DeferredPromise(Deferred.Promise<T> promise) {
-        this.subject = null;
-        this.promise = promise;
     }
 
     @Nonnull

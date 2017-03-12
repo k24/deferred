@@ -7,15 +7,26 @@ import io.reactivex.subjects.MaybeSubject;
 import javax.annotation.Nonnull;
 
 /**
+ * {@link Deferred} with RxJava2.
+ * <p>
  * Created by k24 on 2017/02/25.
  */
+@SuppressWarnings("WeakerAccess")
 public class RxJava2Deferred implements Deferred {
     private final Scheduler scheduler;
 
+    /**
+     * Construct without Scheduler.
+     */
     public RxJava2Deferred() {
         this(null);
     }
 
+    /**
+     * Construct with Scheduler.
+     *
+     * @param scheduler for {@link RxJava2Promise}
+     */
     public RxJava2Deferred(Scheduler scheduler) {
         this.scheduler = scheduler;
     }

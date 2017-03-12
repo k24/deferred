@@ -3,8 +3,11 @@ package com.github.k24.deferred;
 import javax.annotation.Nonnull;
 
 /**
+ * Deferred Interface.
+ * <p>
  * Created by k24 on 2016/11/03.
  */
+@SuppressWarnings("SameParameterValue") // Fix resolved value is always 100...
 public interface Deferred {
     /**
      * Promise to defer an operation.
@@ -233,7 +236,15 @@ public interface Deferred {
         R onRejected(@Nonnull Throwable reason) throws Exception;
     }
 
+    /**
+     * Factory for Deferred
+     */
     interface Factory {
+        /**
+         * Create Deferred.
+         *
+         * @return new instance
+         */
         Deferred deferred();
     }
 }

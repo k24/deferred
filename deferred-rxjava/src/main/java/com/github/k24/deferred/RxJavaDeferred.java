@@ -7,15 +7,26 @@ import rx.subjects.AsyncSubject;
 import javax.annotation.Nonnull;
 
 /**
+ * Deferred with RxJava.
+ * <p>
  * Created by k24 on 2017/03/01.
  */
+@SuppressWarnings("WeakerAccess")
 public class RxJavaDeferred implements Deferred {
     private final Scheduler scheduler;
 
+    /**
+     * Construct without Scheduler.
+     */
     public RxJavaDeferred() {
         this(null);
     }
 
+    /**
+     * Construct with Scheduler.
+     *
+     * @param scheduler for {@link RxJavaPromise}
+     */
     public RxJavaDeferred(Scheduler scheduler) {
         this.scheduler = scheduler;
     }

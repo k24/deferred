@@ -6,24 +6,46 @@ import rx.subjects.AsyncSubject;
 import javax.annotation.Nonnull;
 
 /**
+ * DeferredPromise with RxJava.
+ * <p>
  * Created by k24 on 2017/03/01.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class RxJavaDeferredPromise<T> implements Deferred.DeferredPromise<T> {
     private final AsyncSubject<T> subject;
     private final RxJavaPromise<T> promise;
 
+    /**
+     * Construct with default values.
+     */
     public RxJavaDeferredPromise() {
         this(AsyncSubject.<T>create());
     }
 
-    public RxJavaDeferredPromise(Scheduler scheduler) {
-        this(AsyncSubject.<T>create(), scheduler);
-    }
-
+    /**
+     * Construct with Subject.
+     *
+     * @param subject for {@link RxJavaPromise}
+     */
     public RxJavaDeferredPromise(AsyncSubject<T> subject) {
         this(subject, null);
     }
 
+    /**
+     * Construct with Scheduler.
+     *
+     * @param scheduler for {@link RxJavaPromise}
+     */
+    public RxJavaDeferredPromise(Scheduler scheduler) {
+        this(AsyncSubject.<T>create(), scheduler);
+    }
+
+    /**
+     * Construct with Subject and Scheduler.
+     *
+     * @param subject for {@link RxJavaPromise}
+     * @param scheduler for {@link RxJavaPromise}
+     */
     public RxJavaDeferredPromise(AsyncSubject<T> subject, Scheduler scheduler) {
         this.subject = subject;
         if (scheduler == null) {

@@ -13,15 +13,29 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * {@link Deferred.Promise} with RxJava2.
+ * <p>
  * Created by k24 on 2017/02/25.
  */
+@SuppressWarnings("WeakerAccess")
 public class RxJava2Promise<T> implements Deferred.Promise<T> {
     private final Maybe<T> maybe;
 
+    /**
+     * Construct with {@link Maybe}.
+     *
+     * @param maybe for Promise operation
+     */
     public RxJava2Promise(@NonNull Maybe<T> maybe) {
         this(maybe, null);
     }
 
+    /**
+     * Construct with {@link Maybe} and {@link Scheduler}.
+     *
+     * @param maybe     for Promise operation
+     * @param scheduler for maybe subscribeOn
+     */
     public RxJava2Promise(@NonNull Maybe<T> maybe, Scheduler scheduler) {
         if (scheduler == null) {
             this.maybe = maybe;
@@ -30,14 +44,34 @@ public class RxJava2Promise<T> implements Deferred.Promise<T> {
         }
     }
 
+    /**
+     * Create with {@link Maybe#empty()}
+     *
+     * @param <T> Type
+     * @return an instance with Maybe.empty
+     */
     public static <T> RxJava2Promise<T> empty() {
         return new RxJava2Promise<>(Maybe.<T>empty());
     }
 
+    /**
+     * Create with {@link Maybe#just(Object)}
+     *
+     * @param item for Maybe.just
+     * @param <T>  Type
+     * @return an instance with Maybe.just
+     */
     public static <T> RxJava2Promise<T> just(T item) {
         return new RxJava2Promise<>(Maybe.just(item));
     }
 
+    /**
+     * Create with {@link Maybe#error(Throwable)}
+     *
+     * @param throwable for Maybe.error
+     * @param <T>       Type
+     * @return an instance with Maybe.error
+     */
     public static <T> RxJava2Promise<T> error(Throwable throwable) {
         return new RxJava2Promise<>(Maybe.<T>error(throwable));
     }
@@ -212,6 +246,7 @@ public class RxJava2Promise<T> implements Deferred.Promise<T> {
         return subject.singleElement();
     }
 
+    @SuppressWarnings("unused")
     public static <T> Maybe<T> maybe(Deferred.Promise<T> promise) {
         if (promise instanceof RxJava2Promise) {
             RxJava2Promise<T> rxPromise = (RxJava2Promise<T>) promise;
